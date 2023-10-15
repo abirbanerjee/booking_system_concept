@@ -3,6 +3,13 @@ let selected_time;
 let cal_event;
 const starting_time = 6;
 const slots = 16;
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "/") {
+        console.log("hi");
+        document.getElementById("month_selector").showPicker();
+    }
+})
 const month_selector = document.getElementById("month_selector");
 function getDays(month) {
     const today = new Date();
@@ -40,12 +47,19 @@ async function show_times(calendar_event) {
     for (let i = 0; i < slots; i++) {
         const times = document.createElement("div");
         times.setAttribute("id", "times");
+        times.setAttribute("tabindex", i + 1);
         times.innerText =
             (i + starting_time).toString().padStart(2, "0") +
             ":00" +
             " to " +
             (i + starting_time + 1).toString() +
             ":00";
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                e.target.click();
+            }
+        })
         if (existing_bookings.indexOf(times.innerText.slice(0, 5)) === -1) {
             times.classList.add("open");
             times.addEventListener("click", (e) => {
@@ -92,6 +106,7 @@ async function show_times(calendar_event) {
                     });
                 }
                 popup.hidden = false;
+                document.querySelector(".popup").focus();
             });
         } else {
             times.classList.add("booked");
