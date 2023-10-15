@@ -6,7 +6,6 @@ const slots = 16;
 
 document.addEventListener("keydown", (e) => {
     if (e.key === "/") {
-        console.log("hi");
         document.getElementById("month_selector").showPicker();
     }
 })
